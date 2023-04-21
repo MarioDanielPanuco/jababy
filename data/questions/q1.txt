@@ -1,0 +1,4 @@
+Ex.2 (20pts) (Zero Eigenvalues and Connected Components)
+Following our discussion from the class, prove the following theorem from spectral graph theory: “The number of zero eigenvalues of the Laplacian LG (i.e.
+the multiplicity of the 0 eigenvalue) equals the number of connected components of the graph G.”
+Then describe/draw an example of a graph with n = 8 nodes, consisting of 3 connected components, and instantiate your proof on that example: i.e., observe that there are indeed 3 zero eigenvalues of the Laplacian matrix, and then provide the 3 corresponding eigenvectors.
