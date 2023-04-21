@@ -1,7 +1,6 @@
 use llm_chain::{chains::sequential::Chain, prompt};
 use llm_chain_openai::chatgpt::{Model, Executor, Step};
 use std::fs;
-use llm_chain::serialization::IoExt;
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
@@ -16,7 +15,7 @@ async fn main() {
     // Create a chain for the Professor's prompt
     let professor_chain = Chain::new(vec![
         Step::for_prompt(
-            prompt!("System: PHD in Computer Science, expertise in spectral graph theory, Respond in a combination of text and latex code blocks, or wrap math typesets within $$",
+            prompt!("System: PHD in Computer Science, expertise in {{expertise}}, Respond in a combination of text and latex code blocks, or wrap math typesets within $$",
                 "Make lecture notes to address this question. Provide proof if question asks for proof{{question}}")
         )
     ]);
@@ -25,7 +24,7 @@ async fn main() {
     let ta_chain = Chain::new(vec![
         Step::for_prompt(
             prompt!( "System: You are the TA, try to implement some of lecture into Python code (networks and numpy) and only respond with the code",
-                "Lecture: {{text}}\n==\n")
+                "Lecture: {{latex}}\n==\n")
         )
     ]);
 
@@ -33,11 +32,18 @@ async fn main() {
     // Run the Professor's chain with the provided parameters
     let professor_output = professor_chain
         .run(
-            vec![("question", question_text.as_str())].into(),
+            vec![("expertise", "spectral graph theory"),
+                 ("question", question_text.as_str())].into(),
             &exec,
         )
         .await
-        .unwrap();
+        .expect("Failed to run professor");
+
+    // Write the professor's LaTeX notes to a file at "./data/responses/professor_notes.txt"
+    fs::write("./data/responses/professor_notes.txt", professor_output.to_string())
+        .expect("Failed to write the professor's LaTeX notes to ./data/responses/professor_notes.txt");
+
+    println!("Prof: \n===\n{:?}", professor_output.to_string());
 
 let ta_output = ta_chain
         .run(
@@ -45,18 +51,13 @@ let ta_output = ta_chain
             &exec,
         )
         .await
-        .unwrap();
+        .expect("Failed to run TA");
 
-
-    // Write the professor's LaTeX notes to a file at "./data/responses/professor_notes.txt"
-    fs::write("./data/responses/professor_notes.txt", professor_output.to_string())
-        .expect("Failed to write the professor's LaTeX notes to ./data/responses/professor_notes.txt");
 
     // Write the TA's code to a file at "./data/responses/ta_code.py"
     fs::write("./data/responses/ta_code.py", ta_output.to_string())
         .expect("Failed to write the TA's code to ./data/responses/ta_code.py");
 
     // Print the result to the console
-    println!("Prof: \n===\n{:?}", professor_output.to_string());
     println!("TA: \n===\n{:?}", professor_output.to_string());
 }
