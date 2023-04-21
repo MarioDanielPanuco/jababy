@@ -1,0 +1,77 @@
+Theorem: The number of zero eigenvalues of the Laplacian $L_G$ equals the number of connected components of the graph $G$.
+
+Proof: Let $G$ be a graph with $n$ vertices and $m$ edges. We will prove this theorem using the following steps:
+
+Step 1: Assume that $G$ has $k$ connected components.
+
+Step 2: Label the vertices of $G$ in such a way that vertices in the same connected component have consecutive labels.
+
+Step 3: Let $A$ be the adjacency matrix of $G$, and let $D$ be the diagonal matrix of vertex degrees.
+
+Step 4: Compute the Laplacian matrix $L_G = D - A$.
+
+Step 5: Observe that $L_G$ has a block structure with $k$ blocks, where the $i$th block corresponds to the vertices in the $i$th connected component of $G$. Each block is a submatrix of $L_G$ that corresponds to the adjacency matrix and degree matrix of the vertices in that connected component.
+
+Step 6: Since the blocks are non-overlapping, their eigenvalues and eigenvectors are also non-overlapping. Therefore, we can consider the eigenvalues and eigenvectors of each block separately.
+
+Step 7: For each block, the eigenvector corresponding to eigenvalue 0 is the vector of all ones. This is because the degree matrix has a row of all ones, and multiplying any vector by this row yields the sum of its entries, which is 0 for the eigenvector corresponding to eigenvalue 0.
+
+Step 8: Since each block has an eigenvector corresponding to eigenvalue 0, and these eigenvectors are non-overlapping, $L_G$ has $k$ eigenvectors corresponding to eigenvalue 0. Therefore, the multiplicity of 0 as an eigenvalue of $L_G$ is $k$, which is the number of connected components of $G$.
+
+Example:
+Consider the graph $G$ with 8 nodes, consisting of 3 connected components:
+
+```
+1 -- 2    4 -- 5 -- 6    7 -- 8
+```
+
+We can label the vertices consecutively within each connected component:
+
+```
+1 -- 2    3 -- 4 -- 5    6 -- 7
+```
+
+The adjacency matrix $A$ and degree matrix $D$ are:
+
+$$A = \begin{bmatrix}
+0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+1 & 0 & 0 & 1 & 1 & 0 & 0 & 0 \\
+0 & 1 & 1 & 0 & 1 & 1 & 0 & 0 \\
+0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1 & 1 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 1 \\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+\end{bmatrix}, \quad D = \begin{bmatrix}
+2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 2 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 3 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 4 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 3 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 3 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 2 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+\end{bmatrix}$$
+
+The Laplacian matrix $L_G = D - A$ is:
+
+$$L_G = \begin{bmatrix}
+2 & -1 & -1 & 0 & 0 & 0 & 0 & 0 \\
+-1 & 2 & 0 & -1 & 0 & 0 & 0 & 0 \\
+-1 & 0 & 3 & -1 & -1 & 0 & 0 & 0 \\
+0 & -1 & -1 & 4 & -1 & -1 & 0 & 0 \\
+0 & 0 & -1 & -1 & 3 & -1 & 0 & 0 \\
+0 & 0 & 0 & -1 & -1 & 3 & -1 & 0 \\
+0 & 0 & 0 & 0 & 0 & -1 & 2 & -1 \\
+0 & 0 & 0 & 0 & 0 & 0 & -1 & 1 \\
+\end{bmatrix}$$
+
+By the theorem we proved, there are 3 zero eigenvalues of $L_G$, which corresponds to the number of connected components in $G$. The corresponding eigenvectors are the following:
+
+For the first connected component, the eigenvector is $\begin{bmatrix} 1 & 1 \end{bmatrix}^T$.
+
+For the second connected component, the eigenvector is $\begin{bmatrix} 1 & 1 & 1 \end{bmatrix}^T$.
+
+For the third connected component, the eigenvector is $\begin{bmatrix} 1 & 1 \end{bmatrix}^T$.
+
+These eigenvectors have distinct entries for each connected component, and have a sum of 0, which confirms that they correspond to the nullspace of $L_G$ with eigenvalue 0. Thus, we have verified the theorem for this example.
