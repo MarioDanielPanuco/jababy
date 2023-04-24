@@ -1,0 +1,6 @@
+Consider the second order linear homogeneous differential equation with constant coefficients:
+ay′′ +by′ +cy = 0 (1)
+Prove that:
+• If a, b, c are positive, all solutions of equation (1) approach zero as t → ∞.
+• Ifa>0,c>0butb=0,allsolutionsofequation(1)areboundedast→∞.
+• If a > 0, b > 0 but c = 0, all solutions of equation (1) approach a constant that depends on the initial conditions as t → ∞. Determine this constant for the initial conditions y(0) = y0, y′(0) = y0′ .
