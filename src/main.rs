@@ -32,7 +32,6 @@ async fn main() {
     tracing_subscriber::fmt()
         .pretty()
         .with_ansi(true)
-        .fmt_fields(format::PrettyFields::new().with_ansi(true))
         .init();
 
     info!("Expertise: {}", expertise);
